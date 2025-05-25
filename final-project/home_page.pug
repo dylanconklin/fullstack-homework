@@ -1,0 +1,11 @@
+//- feed.pug
+//- includes/navbar.pug
+//- includes/preamble.pug
+
+html
+    include preamble
+    body
+        h1(align='center', class='display-1') #{title}
+        include navbar.pug
+        div(class='container')
+            p(class='p-3') Hello! Welcome to my website. Click the buttons to see some facts about the world

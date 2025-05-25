@@ -1,0 +1,13 @@
+//- post.pug
+
+mixin post(title, content)
+    .container-fluid.border.rounded
+        h2=title
+        p=content
+        .row
+            .col
+                .d-flex.gap-3.align-items-center
+                    i.fa-solid.fa-thumbs-up
+                    p.fw-lighter.mb-0 Like
+                    i.fa-solid.fa-comment
+                    p.fw-lighter.mb-0 Comment

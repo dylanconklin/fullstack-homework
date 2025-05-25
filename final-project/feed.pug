@@ -1,0 +1,17 @@
+//- feed.pug
+include post.pug
+
+html
+    include preamble
+    body
+        h1(align='center', class='display-1') #{title}
+        .container-fluid
+            .row
+                .col-md-3.bg-light.min-vh-100
+                    include navbar.pug
+                .col-md-9
+                    +post("Post Title", "Post Content")
+                    div(class='container')
+                        ol
+                            each val in items
+                                li= val.post.record.text

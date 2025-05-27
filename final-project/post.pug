@@ -1,13 +1,22 @@
 //- post.pug
 
-mixin post(title, content)
-    .container-fluid.border.rounded
-        h2=title
-        p=content
+mixin post(val)
+    .container-fluid.border.rounded.p-3.m-3
         .row
-            .col
-                .d-flex.gap-3.align-items-center
-                    i.fa-solid.fa-thumbs-up
-                    p.fw-lighter.mb-0 Like
-                    i.fa-solid.fa-comment
-                    p.fw-lighter.mb-0 Comment
+            .col-auto
+                img(src=val.post.author.avatar, height=64, width=64).img-thumbnail
+                //- img(src=val.post.author.avatar).img-thumbnail.img-fluid.rounded-circle(style="max-width: 64px; height: auto;")
+            .col.md-10
+                .row
+                    p=val.post.record.text
+                .row
+                    if val.post.embed && val.post.embed.images
+                        img(src=val.post.embed.images[0].fullsize).img
+                .row
+                    .d-flex.gap-3.align-items-center
+                        button.btn
+                            i.fa-solid.fa-thumbs-up
+                            p.fw-lighter.mb-0 Like
+                        button.btn
+                            i.fa-solid.fa-comment
+                            p.fw-lighter.mb-0 Comment

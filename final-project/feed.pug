@@ -10,8 +10,7 @@ html
                 .col-md-3.bg-light.min-vh-100
                     include navbar.pug
                 .col-md-9
-                    +post("Post Title", "Post Content")
                     div(class='container')
                         ol
                             each val in items
-                                li= val.post.record.text
+                                +post(val)

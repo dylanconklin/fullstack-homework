@@ -46,7 +46,7 @@ app.get("/whats-hot", async (req, res) => {
     .type("html")
     .send(
       pug.renderFile("feed.pug", {
-        title: "Feed",
+        title: "What's Hot",
         items: postsArray,
       })
     );

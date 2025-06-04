@@ -121,7 +121,7 @@ app.get("/feed", async (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).type("html").send("<h1>404 - page not found</h1>");
+  res.status(404).type("html").send(pug.renderFile("404.pug"));
 });
 
 app.listen(port, () => {

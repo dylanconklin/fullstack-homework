@@ -18,6 +18,10 @@ app.get("/home", (req, res) => {
     .send(pug.renderFile("home_page.pug", { title: "Home" }));
 });
 
+app.get("/login", (req, res) => {
+  res.status(200).type("html").send(pug.renderFile("login.pug"));
+});
+
 app.get("/capitals", async (req, res) => {
   let values: string[] = [];
   const countries = await fetch("https://restcountries.com/v3.1/all")

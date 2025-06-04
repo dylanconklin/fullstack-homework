@@ -1,0 +1,15 @@
+//- feed.pug
+//- includes/preamble.pug
+
+html
+    include preamble
+    body
+        h1(align='center', class='display-1') BlueSky Client
+        div(align='center')
+            form(action='/login' method='post')
+                div(class='container').m-3
+                    input(type='email' placeholder='Email').form-control
+                div(class='container').m-3
+                    input(type='password', placeholder='Password').form-control
+                div(class='container').m-3
+                    input(align='center', type='submit').btn.btn-primary.btn-default.text-center

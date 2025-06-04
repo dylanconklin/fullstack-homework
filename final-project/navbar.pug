@@ -2,11 +2,8 @@
 
 mixin navButton(dest, label)
   a(class='nav-link', href=dest)
-    button(type='button', class='btn btn-outline-primary w-100 text-start') #{label}
+    button(type='button', class='btn btn-outline-primary w-100 text-start').btn #{label}
 
 nav(class='nav flex-column p-3')
   +navButton('/home', 'Home')
-  +navButton('/capitals', 'Capitals')
-  +navButton('/populous', 'Populous')
-  +navButton('/regions', 'Regions')
-  +navButton('/feed', 'Feed')
+  +navButton('/whats-hot', 'What\'s Hot')

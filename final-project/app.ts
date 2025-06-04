@@ -28,19 +28,12 @@ app.get("/whats-hot", async (req, res) => {
     identifier: "culls.mourner_51@icloud.com",
     password: "9WKij1zDGahZsqn",
   });
-  // const { data } = await agent.getTimeline({
-  //   // cursor: "...",
-  //   // limit: 30,
-  // });
   const { data } = await agent.app.bsky.feed.getFeed({
     feed: "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot",
     limit: 3,
   });
   const { feed: postsArray, cursor: nextPage } = data;
   console.log(JSON.stringify(data, null, 2));
-  postsArray.forEach((a) => {
-    console.log(a.post.record.text);
-  });
   res
     .status(200)
     .type("html")

@@ -20,28 +20,6 @@ app.get("/login", (req, res) => {
   res.status(200).type("html").send(pug.renderFile("login.pug"));
 });
 
-app.get("/capitals", async (req, res) => {
-  let values: string[] = [];
-  const countries = await fetch("https://restcountries.com/v3.1/all")
-    .then((response) => response.json())
-    .then(
-      (data) =>
-        (values = data
-          .map((e) => [e.name.common, e.capital].join(" - "))
-          .sort())
-    )
-    .catch((error) => console.error(error));
-  res
-    .status(200)
-    .type("html")
-    .send(
-      pug.renderFile("feed.pug", {
-        title: "Countries and Capitals",
-        items: values,
-      })
-    );
-});
-
 app.get("/whats-hot", async (req, res) => {
   const agent = new BskyAgent({
     service: "https://bsky.social",

@@ -5,8 +5,6 @@ import { BskyAgent } from "@atproto/api";
 const app = express();
 const port = process.env.PORT || 5001;
 
-const routes = ["home", "capitals", "populous", "regions"];
-
 app.get("/", (req, res) => {
   res.redirect(302, "/home");
 });
@@ -44,55 +42,7 @@ app.get("/capitals", async (req, res) => {
     );
 });
 
-app.get("/populous", async (req, res) => {
-  let values: string[] = [];
-  const countries = await fetch("https://restcountries.com/v3.1/all")
-    .then((response) => response.json())
-    .then(
-      (data) =>
-        (values = data
-          .map((e) => [e.name.common, e.population].join(" - "))
-          .sort())
-    )
-    .catch((error) => console.error(error));
-  res
-    .status(200)
-    .type("html")
-    .send(
-      pug.renderFile("feed.pug", {
-        title: "Most Populous Countries",
-        items: values,
-      })
-    );
-});
-
-app.get("/regions", async (req, res) => {
-  let values: string[] = [];
-  const countries = await fetch("https://restcountries.com/v3.1/all")
-    .then((response) => response.json())
-    .then((data) => {
-      let regions: Set<string> = new Set(
-        data.map((e) =>
-          [e.region, data.filter((c) => c.region == e.region).length].join(
-            " - "
-          )
-        )
-      );
-      values = Array.from(regions).sort();
-    })
-    .catch((error) => console.error(error));
-  res
-    .status(200)
-    .type("html")
-    .send(
-      pug.renderFile("feed.pug", {
-        title: "Regions of the World",
-        items: values,
-      })
-    );
-});
-
-app.get("/feed", async (req, res) => {
+app.get("/whats-hot", async (req, res) => {
   const agent = new BskyAgent({
     service: "https://bsky.social",
   });

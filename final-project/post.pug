@@ -5,7 +5,6 @@ mixin post(val)
         .row
             .col-auto
                 img(src=val.post.author.avatar, height=64, width=64).img-thumbnail
-                //- img(src=val.post.author.avatar).img-thumbnail.img-fluid.rounded-circle(style="max-width: 64px; height: auto;")
             .col.md-10
                 .row
                     p=val.post.record.text

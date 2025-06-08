@@ -1,0 +1,27 @@
+//- photos.pug
+
+mixin singlePhoto(photos)
+    img(src=photos[0], style='max-height: 500px; width: auto;').img.d-block.mx-auto
+
+mixin multiplePhotos(uri, photos)
+    div(id=uri).carousel.slide
+        .carousel-inner
+            each photo, index in photos
+                if index === 0
+                    .carousel-item.active
+                        img(src=photo, style='max-height: 500px; width: auto;').img.d-block.mx-auto
+                else
+                    .carousel-item
+                        img(src=photo, style='max-height: 500px; width: auto;').img.d-block.mx-auto
+        button(data-bs-target="#" + uri, data-bs-slide="prev").btn.carousel-control-prev
+            span(aria-hidden="true").carousel-control-prev-icon
+            span.visually-hidden=Previous
+        button(data-bs-target="#" + uri, data-bs-slide="next").btn.carousel-control-next
+            span(aria-hidden="true").carousel-control-next-icon
+            span.visually-hidden=Next
+
+mixin photos(uri, photos)
+    if photos.length > 1
+        +multiplePhotos(uri, photos)
+    else
+        +singlePhoto(photos)

@@ -34,7 +34,6 @@ app.get("/whats-hot", async (req, res) => {
     limit: 3,
   });
   const { feed: postsArray, cursor: nextPage } = data;
-  console.log(JSON.stringify(data, null, 2));
   const feed = postsArray.map((e) => new Post(agent, e));
   res
     .status(200)

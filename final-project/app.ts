@@ -2,6 +2,8 @@ import pug from "pug";
 import express from "express";
 import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
 import Post from "./post";
+import fs from "fs";
+import path from "path";
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -25,10 +27,7 @@ app.get("/whats-hot", async (req, res) => {
   const agent = new AtpAgent({
     service: "https://bsky.social",
   });
-  await agent.login({
-    identifier: "culls.mourner_51@icloud.com",
-    password: "9WKij1zDGahZsqn",
-  });
+  await agent.login(getLogin());
   const { data } = await agent.app.bsky.feed.getFeed({
     feed: "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot",
     limit: 100,
@@ -53,3 +52,21 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log("Server running at http:localhost:" + port);
 });
+
+function getLogin(): Credentials {
+  return JSON.parse(
+    fs.readFileSync(path.join(__dirname, "credentials.json"), {
+      encoding: "utf-8",
+    })
+  );
+}
+
+class Credentials {
+  identifier: string;
+  password: string;
+
+  constructor(identifier: string, password: string) {
+    this.identifier = identifier;
+    this.password = password;
+  }
+}

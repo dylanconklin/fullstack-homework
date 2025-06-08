@@ -1,6 +1,7 @@
 import pug from "pug";
 import express from "express";
 import { BskyAgent } from "@atproto/api";
+import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -21,7 +22,7 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/whats-hot", async (req, res) => {
-  const agent = new BskyAgent({
+  const agent = new AtpAgent({
     service: "https://bsky.social",
   });
   await agent.login({

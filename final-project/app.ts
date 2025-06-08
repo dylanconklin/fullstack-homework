@@ -2,6 +2,7 @@ import pug from "pug";
 import express from "express";
 import { BskyAgent } from "@atproto/api";
 import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
+import Post from "./post";
 
 const app = express();
 const port = process.env.PORT || 5001;

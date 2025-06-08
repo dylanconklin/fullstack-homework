@@ -1,21 +1,29 @@
 //- post.pug
+include photos.pug
 
-mixin post(val)
+mixin post(post)
     .container-fluid.border.rounded.p-3.m-3
         .row
-            .col-auto
-                img(src=val.post.author.avatar, height=64, width=64).img-thumbnail
-            .col.md-10
+            .container-fluid
                 .row
-                    p=val.post.record.text
-                .row
-                    if val.post.embed && val.post.embed.images
-                        img(src=val.post.embed.images[0].fullsize).img
-                .row
-                    .d-flex.gap-3.align-items-center
-                        button.btn
-                            i.fa-solid.fa-thumbs-up
-                            p.fw-lighter.mb-0 Like
-                        button.btn
-                            i.fa-solid.fa-comment
-                            p.fw-lighter.mb-0 Comment
+                    .col-md-auto
+                        img(src=post.author.avatar, height=64, width=64).img-thumbnail
+                    .col
+                        p.p-0.m-0.fw-bold.text-start=post.author.username
+                        a(href=post.author.profileURL).p-0.m-0.fw-lighter.text-start=post.author.handle
+        .row
+            p=post.text
+        .row
+            if post.images != undefined
+                +photos(post.uri, post.images)
+        .row
+            .d-flex.gap-3.align-items-center
+                button.btn
+                    i.fa-solid.fa-thumbs-up
+                    p.fw-lighter.mb-0 Like
+                button.btn
+                    i.fa-solid.fa-comment
+                    p.fw-lighter.mb-0 Comment
+        .row
+            .d-flex.gap-3.align-items-center
+                p.p-0.m-0=[post.likeCount, "likes"].join(" ")

@@ -52,38 +52,3 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log("Server running at http:localhost:" + port);
 });
-
-class Poster {
-  username: string;
-  avatar: string;
-
-  constructor(username: string, avatar: string) {
-    this.username = username;
-    this.avatar = avatar;
-  }
-}
-
-class Post {
-  uri: string;
-  poster: Poster;
-  liked: boolean;
-  text: string | undefined;
-  images: [string] | undefined;
-  videos: [string] | undefined;
-
-  constructor(
-    uri: string,
-    poster: Poster,
-    liked: boolean,
-    text: string | undefined,
-    images: [string] | undefined,
-    videos: [string] | undefined
-  ) {
-    this.uri = uri;
-    this.poster = poster;
-    this.liked = liked;
-    this.text = text;
-    this.images = images;
-    this.videos = videos;
-  }
-}

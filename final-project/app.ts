@@ -23,6 +23,18 @@ app.get("/login", (req, res) => {
   res.status(200).type("html").send(pug.renderFile("login.pug"));
 });
 
+app.post("/login", (req, res) => {
+  console.log(req);
+  const credentials: Credentials = new Credentials(
+    req.body.email,
+    req.body.password
+  );
+  const filename: string = "credentials.json";
+  const filepath: string = path.join(__dirname, filename);
+  fs.writeFileSync(filepath, JSON.stringify(credentials));
+  res.redirect(302, "/home");
+});
+
 app.get("/whats-hot", async (req, res) => {
   const agent = new AtpAgent({
     service: "https://bsky.social",

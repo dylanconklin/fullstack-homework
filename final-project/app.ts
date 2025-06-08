@@ -54,11 +54,15 @@ app.listen(port, () => {
 });
 
 function getLogin(): Credentials {
-  return JSON.parse(
-    fs.readFileSync(path.join(__dirname, "credentials.json"), {
-      encoding: "utf-8",
-    })
-  );
+  const filename: string = "credentials.json";
+  const filepath: string = path.join(__dirname, filename);
+  return fs.existsSync(filepath)
+    ? JSON.parse(
+        fs.readFileSync(filepath, {
+          encoding: "utf-8",
+        })
+      )
+    : Credentials.empty();
 }
 
 class Credentials {

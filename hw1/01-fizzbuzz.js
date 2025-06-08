@@ -9,6 +9,28 @@ Use console.log() to write the proper output to the command line.
 
 **/
 
+function fizzBuzz(x = 0) {
+    let result = "";
+    if (x % 3 === 0 && x % 5 === 0) {
+        result = 'fizzbuzz';
+    } else if (x % 3 === 0) {
+        result = 'fizz';
+    } else if (x % 5 === 0) {
+        result = 'buzz';
+    } else {
+        result = x.toString();
+    }
+    return result;
+}
+
+function main() {
+    for (let i = 1; i <= 100; i++) {
+        console.log(fizzBuzz(i));
+    }
+}
+
+main();
+
 // 1
 // 2
 // fizz

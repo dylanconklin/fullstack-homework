@@ -1,6 +1,5 @@
 import pug from "pug";
 import express from "express";
-import { BskyAgent } from "@atproto/api";
 import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
 import Post from "./post";
 

@@ -22,9 +22,31 @@ const routes = [
 ];
 
 app.get('/', (req, res) => {
-  res.status(200);
-  res.set({ 'Content-Type': 'text/html' });
-  res.send('Express Routing Exercise');
+  res.status(200).type('html').send('<h1>Express Routing Exercise</h1>');
+});
+
+app.get('/welcome', (req, res) => {
+  res.status(200).type('html').send('<h1>Welcome</h1>');
+});
+
+app.get('/redirect', (req, res) => {
+  res.redirect(302, '/redirected');
+});
+
+app.get('/redirected', (req, res) => {
+  res.status(200).type('html').send('<h1>Redirected</h1>');
+});
+
+app.get('/cache', (req, res) => {
+  res.status(200).type('html').set({ 'Cache-Control': 'max-age=86400' }).send('<h1>this resource was cached</h1>');
+});
+
+app.get('/cookie', (req, res) => {
+  res.status(200).type('text').cookie('hello', 'world').send('cookies... yummm');
+});
+
+app.use((req, res) => {
+  res.status(404).type('html').send('<h1>404 - page not found</h1>');
 });
 
 // Add your code here

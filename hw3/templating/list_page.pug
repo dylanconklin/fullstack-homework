@@ -1,0 +1,13 @@
+//- list_page.pug
+//- includes/navbar.pug
+//- includes/preamble.pug
+
+html
+    include preamble
+    body
+        h1(align='center', class='display-1') #{title}
+        include navbar.pug
+        div(class='container')
+            ol
+                each val in items
+                    li= val

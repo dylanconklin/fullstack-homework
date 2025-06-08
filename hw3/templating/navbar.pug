@@ -1,0 +1,17 @@
+//- navbar.pug
+
+mixin navButton(dest, label)
+    a(href=dest)
+        button(type='button', class='btn') #{label}
+
+div(align='center')
+    +navButton('/home', 'Home')
+    |
+    |
+    +navButton('/capitals', 'Capitals')
+    |
+    |
+    +navButton('/populous', 'Populous')
+    |
+    |
+    +navButton('/regions', 'Regions')

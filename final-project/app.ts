@@ -35,13 +35,14 @@ app.get("/whats-hot", async (req, res) => {
   });
   const { feed: postsArray, cursor: nextPage } = data;
   console.log(JSON.stringify(data, null, 2));
+  const feed = postsArray.map((e) => new Post(agent, e));
   res
     .status(200)
     .type("html")
     .send(
       pug.renderFile("feed.pug", {
         title: "What's Hot",
-        items: postsArray,
+        feed: feed,
       })
     );
 });

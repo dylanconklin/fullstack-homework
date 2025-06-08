@@ -12,5 +12,5 @@ html
                 .col-md-9
                     div(class='container')
                         ol
-                            each val in items
-                                +post(val)
+                            each post in feed
+                                +post(post)

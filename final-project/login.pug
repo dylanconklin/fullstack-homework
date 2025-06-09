@@ -8,10 +8,8 @@ html
         div(align='center')
             form(action='/login' method='post')
                 div(class='container').m-3
-                    label(for='email') Email
-                    input(id='email' type='email' placeholder='Email').form-control
+                    input(name='email' type='email' placeholder='Email').form-control
                 div(class='container').m-3
-                    label(for='password') Password
-                    input(id='password' type='password', placeholder='Password').form-control
+                    input(name='password' type='password', placeholder='Password').form-control
                 div(class='container').m-3
                     input(align='center', type='submit').btn.btn-primary.btn-default.text-center

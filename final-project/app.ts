@@ -2,12 +2,13 @@ import pug from "pug";
 import express from "express";
 import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
 import Post from "./post";
-import fs from "fs";
-import path from "path";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = process.env.PORT || 5001;
 
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.redirect(302, "/whats-hot");
@@ -18,15 +19,11 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log(req);
   const credentials: Credentials = new Credentials(
     req.body.email,
     req.body.password
   );
-  const filename: string = "credentials.json";
-  const filepath: string = path.join(__dirname, filename);
-  fs.writeFileSync(filepath, JSON.stringify(credentials));
-  res.redirect(302, "/home");
+  res.cookie("credentials", JSON.stringify(credentials)).redirect(302, "/home");
 });
 
 app.get("/whats-hot", async (req, res) => {
@@ -59,16 +56,9 @@ app.listen(port, () => {
   console.log("Server running at http:localhost:" + port);
 });
 
-function getLogin(): Credentials {
-  const filename: string = "credentials.json";
-  const filepath: string = path.join(__dirname, filename);
-  return fs.existsSync(filepath)
-    ? JSON.parse(
-        fs.readFileSync(filepath, {
-          encoding: "utf-8",
-        })
-      )
-    : Credentials.empty();
+function getLogin(req: any): Credentials {
+  const result: Credentials = JSON.parse(req.cookies.credentials);
+  return result;
 }
 
 class Credentials {

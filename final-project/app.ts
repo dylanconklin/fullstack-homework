@@ -35,14 +35,35 @@ app.get("/whats-hot", async (req, res) => {
     feed: "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot",
     limit: 100,
   });
-  const { feed: postsArray, cursor: nextPage } = data;
-  const feed = postsArray.map((e) => new Post(agent, e));
+  const feed = data.feed.map((e) => new Post(agent, e.post));
   res
     .status(200)
     .type("html")
     .send(
       pug.renderFile("feed.pug", {
         title: "What's Hot",
+        feed: feed,
+      })
+    );
+});
+
+app.post("/search", async (req, res) => {
+  const term: string = req.body.term;
+  const agent = new AtpAgent({
+    service: "https://bsky.social",
+  });
+  await agent.login(getLogin(req));
+  const { data } = await agent.app.bsky.feed.searchPosts({
+    q: term,
+    limit: 100,
+  });
+  const feed = data.posts.map((e) => new Post(agent, e));
+  res
+    .status(200)
+    .type("html")
+    .send(
+      pug.renderFile("feed.pug", {
+        title: term,
         feed: feed,
       })
     );

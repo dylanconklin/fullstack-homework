@@ -1,5 +1,5 @@
 import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
-import { FeedViewPost } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
+import { PostView } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import Author from "./author";
 
 export default class Post {
@@ -12,24 +12,21 @@ export default class Post {
   text: string | undefined;
   images: string[] | undefined;
 
-  constructor(agent: AtpAgent, post: FeedViewPost) {
+  constructor(agent: AtpAgent, post: PostView) {
     this.agent = agent;
-    this.cid = post.post.cid;
-    this.uri = post.post.uri;
+    this.cid = post.cid;
+    this.uri = post.uri;
     this.author = new Author(
-      post.post.author.displayName ?? post.post.author.handle,
-      post.post.author.handle,
-      post.post.author.avatar!
+      post.author.displayName ?? post.author.handle,
+      post.author.handle,
+      post.author.avatar!
     );
-    this.likeCount = post.post.likeCount ?? 0;
+    this.likeCount = post.likeCount ?? 0;
     this.liked = false;
-    this.text = (post.post.record as AppBskyFeedPost.Record).text;
-    if (
-      post.post.embed &&
-      post.post.embed.$type === "app.bsky.embed.images#view"
-    ) {
+    this.text = (post.record as AppBskyFeedPost.Record).text;
+    if (post.embed && post.embed.$type === "app.bsky.embed.images#view") {
       this.images = (
-        post.post.embed as { images: { fullsize: string }[] }
+        post.embed as { images: { fullsize: string }[] }
       ).images.map((img) => img.fullsize);
     }
   }

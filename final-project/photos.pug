@@ -13,10 +13,10 @@ mixin multiplePhotos(uri, photos)
                 else
                     .carousel-item
                         img(src=photo, style='max-height: 500px; width: auto;').img.d-block.mx-auto
-        button(data-bs-target="#" + uri, data-bs-slide="prev").btn.carousel-control-prev
+        button(data-bs-target="#" + uri, data-bs-slide="prev").btn.carousel-control-prev.border-0
             span(aria-hidden="true").carousel-control-prev-icon
             span.visually-hidden=Previous
-        button(data-bs-target="#" + uri, data-bs-slide="next").btn.carousel-control-next
+        button(data-bs-target="#" + uri, data-bs-slide="next").btn.carousel-control-next.border-0
             span(aria-hidden="true").carousel-control-next-icon
             span.visually-hidden=Next
 

@@ -1,6 +1,6 @@
 import pug from "pug";
 import express from "express";
-import { AtpAgent, AppBskyFeedPost } from "@atproto/api";
+import { AtpAgent } from "@atproto/api";
 import Post from "./post";
 import cookieParser from "cookie-parser";
 
@@ -80,18 +80,4 @@ app.listen(port, () => {
 function getLogin(req: any): Credentials {
   const result: Credentials = JSON.parse(req.cookies.credentials);
   return result;
-}
-
-class Credentials {
-  identifier: string;
-  password: string;
-
-  static empty(): Credentials {
-    return new Credentials("", "");
-  }
-
-  constructor(identifier: string, password: string) {
-    this.identifier = identifier;
-    this.password = password;
-  }
 }

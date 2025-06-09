@@ -30,7 +30,7 @@ app.get("/whats-hot", async (req, res) => {
   const agent = new AtpAgent({
     service: "https://bsky.social",
   });
-  await agent.login(getLogin());
+  await agent.login(getLogin(req));
   const { data } = await agent.app.bsky.feed.getFeed({
     feed: "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot",
     limit: 100,

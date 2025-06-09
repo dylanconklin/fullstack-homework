@@ -2,7 +2,7 @@
 
 mixin navButton(dest, label)
   a(class='nav-link', href=dest)
-    button(type='button', class='btn btn-outline-primary w-100 text-start').btn #{label}
+    button(type='button').btn.btn-outline-primary.w-100.text-start #{label}
 
 nav(class='nav flex-column p-3')
   +navButton('/home', 'Home')

@@ -1,9 +1,13 @@
 //- navbar.pug
 
+mixin search()
+  form(action='/search' method='post')
+    input(name='term' type='text' placeholder='Search').form-control.w-100
+
 mixin navButton(dest, label)
   a(class='nav-link', href=dest)
     button(type='button').btn.btn-outline-primary.w-100.text-start #{label}
 
-nav(class='nav flex-column p-3')
-  +navButton('/home', 'Home')
+.nav.flex-column.p-3
+  +search()
   +navButton('/whats-hot', 'What\'s Hot')

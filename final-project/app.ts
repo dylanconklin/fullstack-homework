@@ -8,15 +8,9 @@ import path from "path";
 const app = express();
 const port = process.env.PORT || 5001;
 
-app.get("/", (req, res) => {
-  res.redirect(302, "/home");
-});
 
-app.get("/home", (req, res) => {
-  res
-    .status(200)
-    .type("html")
-    .send(pug.renderFile("home_page.pug", { title: "Home" }));
+app.get("/", (req, res) => {
+  res.redirect(302, "/whats-hot");
 });
 
 app.get("/login", (req, res) => {

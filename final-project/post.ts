@@ -30,14 +30,4 @@ export default class Post {
       ).images.map((img) => img.fullsize);
     }
   }
-
-  toggleLike() {
-    if (this.liked) {
-      this.agent.deleteLike(this.uri);
-    } else {
-      this.agent.like(this.uri, this.cid);
-    }
-    this.liked = !this.liked;
-    console.log(`Like is ${this.liked}`);
-  }
 }

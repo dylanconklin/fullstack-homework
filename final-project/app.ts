@@ -3,6 +3,7 @@ import express from "express";
 import { AtpAgent } from "@atproto/api";
 import Post from "./post";
 import cookieParser from "cookie-parser";
+import Credentials from "./credentials";
 
 const app = express();
 const port = process.env.PORT || 5001;

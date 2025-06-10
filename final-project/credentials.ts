@@ -1,4 +1,4 @@
-class Credentials {
+export default class Credentials {
   identifier: string;
   password: string;
 

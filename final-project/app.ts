@@ -23,48 +23,54 @@ app.post("/login", (req, res) => {
     req.body.email,
     req.body.password
   );
-  res.cookie("credentials", JSON.stringify(credentials)).redirect(302, "/home");
+  res
+    .cookie("credentials", JSON.stringify(credentials))
+    .redirect(302, "/whats-hot");
 });
 
 app.get("/whats-hot", async (req, res) => {
-  const agent = new AtpAgent({
-    service: "https://bsky.social",
-  });
-  await agent.login(getLogin(req));
-  const { data } = await agent.app.bsky.feed.getFeed({
-    feed: "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot",
-    limit: 100,
-  });
-  const feed = data.feed.map((e) => new Post(agent, e.post));
+  let searchTerms: string[] = getSearchTerms(req);
   res
     .status(200)
     .type("html")
     .send(
       pug.renderFile("feed.pug", {
         title: "What's Hot",
-        feed: feed,
+        feed: await getPosts(req),
+        searchTerms: searchTerms,
       })
     );
 });
 
 app.post("/search", async (req, res) => {
   const term: string = req.body.term;
-  const agent = new AtpAgent({
-    service: "https://bsky.social",
-  });
-  await agent.login(getLogin(req));
-  const { data } = await agent.app.bsky.feed.searchPosts({
-    q: term,
-    limit: 100,
-  });
-  const feed = data.posts.map((e) => new Post(agent, e));
+  let searchTerms: string[] = getSearchTerms(req);
+  if (searchTerms.includes(term)) {
+    searchTerms = searchTerms.filter((e) => e != term);
+  }
+  searchTerms.reverse().push(term);
+  searchTerms.reverse();
+  if (searchTerms.length > 5) {
+    searchTerms.pop();
+  }
+  res
+    .cookie("searchTerms", JSON.stringify(searchTerms))
+    .redirect(302, "/topic");
+});
+
+app.get("/topic", async (req, res) => {
+  let searchTerms: string[] = getSearchTerms(req);
+  if (searchTerms.length == 0) {
+    res.redirect(302, "/whats-hot");
+  }
   res
     .status(200)
     .type("html")
     .send(
       pug.renderFile("feed.pug", {
-        title: term,
-        feed: feed,
+        title: searchTerms[0],
+        feed: await getPosts(req, searchTerms[0]),
+        searchTerms: searchTerms,
       })
     );
 });
@@ -79,5 +85,49 @@ app.listen(port, () => {
 
 function getLogin(req: any): Credentials {
   const result: Credentials = JSON.parse(req.cookies.credentials);
+  return result;
+}
+
+async function getAgent(req): Promise<AtpAgent> {
+  const agent = new AtpAgent({
+    service: "https://bsky.social",
+  });
+  await agent.login(getLogin(req));
+  return agent;
+}
+
+async function getPosts(
+  req,
+  searchTerm: string | undefined = undefined
+): Promise<Post[]> {
+  const agent = await getAgent(req);
+  return searchTerm == undefined
+    ? await getHotPosts(agent)
+    : await getTopicalPosts(agent, searchTerm);
+}
+
+async function getHotPosts(agent: AtpAgent): Promise<Post[]> {
+  const feed = await agent.app.bsky.feed.getFeed({
+    feed: "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot",
+    limit: 100,
+  });
+  return feed.data.feed.map((e) => new Post(agent, e.post));
+}
+
+async function getTopicalPosts(agent: AtpAgent, term: string): Promise<Post[]> {
+  const feed = await agent.app.bsky.feed.searchPosts({
+    q: term,
+    limit: 100,
+  });
+  return feed.data.posts.map((e) => new Post(agent, e));
+}
+
+function getSearchTerms(req) {
+  let result: string[] = [];
+  try {
+    result = JSON.parse(req.cookies.searchTerms);
+  } catch (e) {
+    result = [];
+  }
   return result;
 }

@@ -85,6 +85,20 @@ app.get("/topic", async (req, res) => {
   }
 });
 
+app.post("/like", async (req, res) => {
+  const agent = await getAgent(req);
+  const postInfo = JSON.parse(req.body.post);
+  await agent.like(postInfo.uri, postInfo.cid);
+  res.redirect(302, "/whats-hot");
+});
+
+app.post("/comment", async (req, res) => {
+  const agent = await getAgent(req);
+  // Add code to comment here
+  console.log(req.body.comment);
+  res.redirect(302, "/whats-hot");
+});
+
 app.use((req, res) => {
   res.status(404).type("html").send(pug.renderFile("404.pug"));
 });

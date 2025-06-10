@@ -1,5 +1,6 @@
 //- feed.pug
 include post.pug
+include navbar.pug
 
 html
     include preamble
@@ -8,7 +9,7 @@ html
         .container-fluid
             .row
                 .col-md-3.bg-light.min-vh-100
-                    include navbar.pug
+                    +navbar(searchTerms)
                 .col-md-9
                     div(class='container')
                         ol

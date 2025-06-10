@@ -30,17 +30,21 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/whats-hot", async (req, res) => {
-  let searchTerms: string[] = getSearchTerms(req);
-  res
-    .status(200)
-    .type("html")
-    .send(
-      pug.renderFile("feed.pug", {
-        title: "What's Hot",
-        feed: await getPosts(req),
-        searchTerms: searchTerms,
-      })
-    );
+  const posts: Post[] | undefined = await getPosts(req);
+  if (posts == undefined) {
+    res.redirect(302, "/login");
+  } else {
+    res
+      .status(200)
+      .type("html")
+      .send(
+        pug.renderFile("feed.pug", {
+          title: "What's Hot",
+          feed: await getPosts(req),
+          searchTerms: getSearchTerms(req),
+        })
+      );
+  }
 });
 
 app.post("/search", async (req, res) => {
@@ -64,16 +68,21 @@ app.get("/topic", async (req, res) => {
   if (searchTerms.length == 0) {
     res.redirect(302, "/whats-hot");
   }
-  res
-    .status(200)
-    .type("html")
-    .send(
-      pug.renderFile("feed.pug", {
-        title: searchTerms[0],
-        feed: await getPosts(req, searchTerms[0]),
-        searchTerms: searchTerms,
-      })
-    );
+  const posts: Post[] | undefined = await getPosts(req, searchTerms[0]);
+  if (posts == undefined) {
+    res.redirect(302, "/login");
+  } else {
+    res
+      .status(200)
+      .type("html")
+      .send(
+        pug.renderFile("feed.pug", {
+          title: searchTerms[0],
+          feed: posts,
+          searchTerms: searchTerms,
+        })
+      );
+  }
 });
 
 app.use((req, res) => {
@@ -100,11 +109,16 @@ async function getAgent(req): Promise<AtpAgent> {
 async function getPosts(
   req,
   searchTerm: string | undefined = undefined
-): Promise<Post[]> {
-  const agent = await getAgent(req);
-  return searchTerm == undefined
-    ? await getHotPosts(agent)
-    : await getTopicalPosts(agent, searchTerm);
+): Promise<Post[] | undefined> {
+  let result: Post[] | undefined = undefined;
+  try {
+    const agent = await getAgent(req);
+    result =
+      searchTerm == undefined
+        ? await getHotPosts(agent)
+        : await getTopicalPosts(agent, searchTerm);
+  } catch (e) {}
+  return result;
 }
 
 async function getHotPosts(agent: AtpAgent): Promise<Post[]> {

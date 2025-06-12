@@ -3,7 +3,6 @@ import { PostView } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import Author from "./author";
 
 export default class Post {
-  agent: AtpAgent;
   cid: string;
   uri: string;
   author: Author;
@@ -12,8 +11,7 @@ export default class Post {
   text: string | undefined;
   images: string[] | undefined;
 
-  constructor(agent: AtpAgent, post: PostView) {
-    this.agent = agent;
+  constructor(post: PostView) {
     this.cid = post.cid;
     this.uri = post.uri;
     this.author = new Author(

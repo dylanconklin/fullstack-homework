@@ -1,0 +1,16 @@
+{
+  "cid": "bafyreih5hu6vylwwh3dfidaf32jduer4uxujvypzt54rrxxk76gel4wlfq",
+  "uri": "at://did:plc:3rkgpi6qhb4p6ne4jk2kspzw/app.bsky.feed.post/3lre4m6yims2r",
+  "author": {
+    "username": "Kansas City Royals",
+    "handle": "royals.com",
+    "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3rkgpi6qhb4p6ne4jk2kspzw/bafkreibwgcsfyjzniae7nvpwrhrn3fbaq7qiyz6zytfcjv7fxd527kepzu@jpeg",
+    "profileURL": "https://bsky.app/profile/royals.com"
+  },
+  "likeCount": 24,
+  "liked": false,
+  "text": "We have made the following roster moves:",
+  "images": [
+    "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:3rkgpi6qhb4p6ne4jk2kspzw/bafkreihhzmnxa3fe6wjgcl6lnocff5ez6ljjkpbps5wshghywgzg4gvewi@jpeg"
+  ]
+}

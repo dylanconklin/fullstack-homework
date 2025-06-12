@@ -1,0 +1,29 @@
+//- post.pug
+include photos.pug
+
+mixin post(post)
+    .container-fluid.border.rounded.p-3.m-3
+        .row
+            .container-fluid
+                .row
+                    .col-md-auto
+                        img(src=post.author.avatar, height=64, width=64).img-thumbnail
+                    .col
+                        p.p-0.m-0.fw-bold.text-start=post.author.username
+                        a(href=post.author.profileURL).p-0.m-0.fw-lighter.text-start=post.author.handle
+        .row
+            p=post.text
+        .row
+            if post.images != undefined
+                +photos(post.uri, post.images)
+        .row
+            .d-flex.gap-3.align-items-center.pt-3
+                form(action='/like', method='post')
+                    input(type='hidden', name='post', value=JSON.stringify({"uri": post.uri, "cid": post.cid}))
+                    button(type='submit').btn
+                        i.fa-solid.fa-thumbs-up
+                form(action='/comment' method='post').w-100
+                    input(name='comment' type='text' placeholder='Comment').form-control.w-100
+        .row
+            .d-flex.gap-3.align-items-center
+                p.p-0.m-0=[post.likeCount, "likes"].join(" ")

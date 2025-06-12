@@ -1,0 +1,28 @@
+{
+  "name": "templating",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^29.5.14",
+    "express": "^5.1.0",
+    "jest": "^29.7.0",
+    "pug": "^3.0.3",
+    "ts-jest": "^29.3.4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.15.8",
+    "cheerio": "^1.1.0",
+    "cookie-parser": "^1.4.7"
+  }
+}
